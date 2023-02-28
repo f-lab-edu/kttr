@@ -1,7 +1,7 @@
 # KTTR (Korea Train Ticket Reservation) Application
 
 
-## Running petclinic locally
+## Running KTTR locally
 KTTR is a [Spring Boot](https://spring.io/guides/gs/spring-boot) application built using [Gradle](https://spring.io/guides/gs/gradle/). You can build a jar file and run it from the command line (it should work just as well with Java 17 or newer):
 
 ```
