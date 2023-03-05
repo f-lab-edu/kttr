@@ -1,0 +1,22 @@
+@startuml ERD
+/'
+* Last Modified Date : 2023.03.03
+* Author : Kang Hee Yeon
+'/
+
+
+entity user(회원) {
+  * id : identity primary key
+  --
+  * code : 멤버쉽 코드
+  create_at : 가입일
+  modify_at : 회원 정보 수정일
+  delete_at : 탈회 처리일
+  name : 이름
+  email : 이메일
+  password : 패스워드
+  phone_number : 휴대폰 번호
+  user_status : 사용자 상태
+}
+
+@enduml
