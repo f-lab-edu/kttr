@@ -1,0 +1,65 @@
+@startuml
+/'
+* Author : Kwon Oh Dong
+* Last Modified Date : 2023.03.03
+* Desc: https://plantuml.com/ko/sequence-diagram 사용법 참조
+'/
+
+title : 비로그인 비회원 발권 프로세스
+
+actor User as u
+participant WAS as w
+participant importPaymentGateWay as pg #LightGreen
+database DB as d
+
+u -> w : ▶ 승차권 종류 선택
+w -> u : * 컨트롤러 리다이렉션\n* GET {url}/TicketTypeController.do
+u -> w : * 승차권별 편성 목록 요청\n* GET {url}/TicketTypeController.do?startStation=""&endStation=""&startDate=""&travelRouteType=""\n* RequestBody\n {"startStation": "서울", "endStation": "부산", "startDate": "202303041102", travelRouteType": "직통"}
+w -> d : 승차권별 편성 목록 조회
+d -> w : 승차권별 편성 목록 반환
+w -> u : 승차권별 편성 페이지 반환
+u -> w : ▶ 예매 버튼 클릭
+rnote over w : 사용자의 로그인 여부 검증 및 예매하려는 승차권 정보 쿠키 저장
+w --> u : 로그인하지 않았다면, 로그인 페이지 이동\n
+
+rnote over u : 비회원 예매 진행
+u -> w : ▶ 비회원 사용자 정보 저장\n* POST {url}/Ticketing\n* RequestBody\n {"name": "권오동", "phone": "010-...", "email": "", "password": ""}
+w -> d : 비회원 예매 정보 저장
+w -> u : 결제 페이지 반환
+
+u --> pg : 결제
+alt successful case
+    pg -> w : 결제 성공 정보 반환
+    w -> d : 결제 모듈 관련 정보 및 발권 완료 정보 저장
+    w -> u : 발권 완료 페이지 반환
+else some kind of failure
+    pg -> w : 결제 실패
+    w -> u : 발권 실패 페이지 반환
+end
+
+newpage 비로그인 회원 발권 프로세스
+
+u -> w : ▶ 승차권 종류 선택
+w -> u : * 컨트롤러 리다이렉션\n* GET {url}/TicketTypeController.do
+u -> w : * 승차권별 편성 목록 요청\n* Get {url}/TicketTypeController.do?startStation=""&endStation=""&startDate=""&travelRouteType=""\n* RequestBody\n {"startStation": "서울", "endStation": "부산", "startDate": "202303041102", travelRouteType": "직통"}
+w -> d : 승차권별 편성 목록 조회
+d -> w : 승차권별 편성 목록 반환
+w -> u : 승차권별 편성 페이지 반환
+u -> w : ▶ 예매 버튼 클릭
+rnote over w : 사용자의 로그인 여부 검증 및 예매하려는 승차권 정보 쿠키 저장
+w --> u : 로그인하지 않았다면, 로그인 페이지 이동
+u -> w : 로그인
+w -> d : 승차권 정보 저장
+w -> u : 로그인 처리 및 예매(예약) 페이지 반환
+
+u --> pg : 결제
+alt successful case
+    pg -> w : 결제 성공 정보 반환
+    w -> d : 결제 모듈 관련 정보 및 발권 완료 정보 저장
+    w -> u : 발권 완료 페이지 반환
+else some kind of failure
+    pg -> w : 결제 실패
+    w -> u : 발권 실패 페이지 반환
+end
+
+@enduml
