@@ -19,4 +19,159 @@ entity user(회원) {
   user_status : 사용자 상태
 }
 
+/'
+  ※ 멤버쉽 id 코드 채번 규칙: A + 3 / 3 / 4
+    - 회원 유형 (임시)
+      1. A: 회원
+      2. B: 비회원
+
+    - 앞의 3자리: 년도의 앞자리 제거 2023 -> 023
+    - 중간 3자리: 월일의 앞자리 제거 03월 08일 -> 308
+    - 뒤의 4자리: 분초 -> 08분 55초 -> 0855
+'/
+entity members(회원) {
+  * members_id : varchar(11) - 멤버쉽 id
+  --
+  * user_name : varchar(300) - 성명
+  * password : varchar(20) - 비밀번호
+  * ticketing_password : char(4) - 현장발권 비밀번호
+  phone_number : char(11) - 휴대폰 번호
+  email : varchar(200) - 이메일
+  address : varchar(500) - 주소
+  create_date : date - 회원 가입일
+  update_date : date - 회원 정보 수정일
+  delete_date : date - 회원 탈회 처리일
+}
+
+/'
+  ※ 멤버쉽 id 코드 채번 규칙: B + 3 / 3 / 4
+    - 회원 유형 (임시)
+      1. A: 회원
+      2. B: 비회원
+      
+    - 앞의 3자리: 년도의 앞자리 제거 2023 -> 023
+    - 중간 3자리: 월일의 앞자리 제거 03월 08일 -> 308
+    - 뒤의 4자리: 분초 -> 08분 55초 -> 0855
+'/
+entity non_members(비회원) {
+  * members_id : varchar(11) - 비회원 멤버쉽 id
+  --
+  * user_name : varchar(300) - 성명
+  * phone_number : char(11) - 휴대폰 번호
+  * password : char(5) - 발권 비밀번호
+  email : varchar(200) - 이메일
+}
+
+/'
+  ※ 발권일시는 결제가 정상적으로 승인되었을 때, 업데이트 할 것!
+'/
+entity ticketing_reservation(승차권예매) {
+  * schedule_id : varchar(50) - 스케줄 id
+  * members_id : varchar(10) - 회원/비회원 멤버쉽 id
+  --
+  * ticketing_date : date - 예매일시
+  payment_yn : char(1) - 발권여부 (default: N)
+  payment_date : date - 발권일시
+}
+
+/'
+  ※ 결제관련 정보는 i'mport 모듈에서 반환하는 결과를 찾아서 컬럼 추가 고려
+'/
+entity ticketing_payment(승차권결제) {
+  * schedule_id : varchar(50) - 스케줄 id
+  * members_id : varchar(10) - 회원/비회원 멤버쉽 id
+  * payment_number : varchar(50) - 결제번호
+  --
+  * payment_date : date - 결제일시
+  * payment_amount : decimal - 결제금액
+}
+
+/'
+  ※ 사원에 의해 관리되는 테이블
+'/
+entity train_schedule(열차스케줄) {
+  * schedule_id : varchar(50) - 스케줄 id
+  --
+  * train_type_id : varchar(10) - 열차 종류
+  * train_id : varchar(30) - 열차
+  * train_travel_type_id : varchar(10) - 열차 여정경로 유형
+  * train_travel_id : varchar(30) - 열차 여정경로
+  * train_depart_date : date - 열차 출발 시간
+  * train_arrive_date : date - 열차 도착 시간
+  * seat_type_id : varchar(10) - 좌석 종류
+  * seat_id : varchar(30) - 좌석
+  use_yn : char(1) - 사용여부
+  create_user_id : varchar(10) - 등록자
+  create_date : date - 등록일시
+  update_user_id : varchar(10) - 수정자
+  update_date : date - 수정일시
+}
+
+/'
+  ※ 사원에 의해 관리되는 테이블
+
+  * 회원 유형
+  * 기차 종류
+  * 여정경로 종류
+  * 좌석 종류
+  * 승차권 종류
+  * 출발역
+  * 도착역
+'/
+entity comm_code_type(공통코드유형) {
+  * comm_code_type_id : varchar(10) - 공통 코드 유형 id
+  --
+  comm_code_type_name : varchar(200) - 공통 코드 유형명  
+  comm_code_type_eng_name : varchar(200) - 공통 코드 유형 영문명
+  use_yn : char(1) - 사용여부
+}
+
+/'
+  ※ 사원에 의해 관리되는 테이블
+
+  * 회원 유형별 목록 관리 (회원, 비회원)
+  * 기차 종류별 목록 관리 (KTX, SRT, ITX, 새마을호 ...)
+  * 여정 경로 유형별 목록 관리 (직통, 환승, 왕복)
+  * 좌석 종류별 목록 관리 (입석, 좌석, 4인석..)
+  * 승차권 종류별 목록 관리 (일반 승차권, 할인 승차권)
+  * 출발역 유형별 목록 관리 (서울, 용산, 부산...)
+  * 도착역 유형별 목록 관리 (서울, 용산, 부산...)
+'/
+entity comm_code(공통코드) {
+  * comm_code_type_id : varchar(10) - 공통 코드 유형 id (foreign key)
+  * comm_code_id : varchar(30) - 공통 코드 id (primary key)
+  --
+  comm_code_name : varchar(200) - 공통 코드명  
+  comm_code_eng_name : varchar(200) - 공통 코드 영문명
+  use_yn : char(1) - 사용여부
+}
+
+/'
+  ※ 사원에 의해 관리되는 테이블
+'/
+entity adm_user(사원) {
+  * user_id : char(8) - 사원번호 (ex: Z2190115)
+  --
+  * user_name : varchar(300) - 성명
+  * email : varchar(200) - 이메일
+}
+
+/'
+  ※ 사원에 의해 관리되는 테이블
+'/
+entity adm_role(권한) {
+  * role_id : char(10) - 권한 id
+  --
+  * role_name : varchar(500) - 권한명
+}
+
+/'
+  ※ 사원에 의해 관리되는 테이블
+'/
+entity adm_user_role(사원권한) {
+  * user_id : char(8) - 사원번호 (ex: Z2190115)
+  * role_id : char(10) - 권한 id
+}
+
+
 @enduml
