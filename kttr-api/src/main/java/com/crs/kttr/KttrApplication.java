@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * KTTR api server.
  *
  * @author Heeyeon.
- * @version 0.0.1
  */
 @SpringBootApplication
 public class KttrApplication {
