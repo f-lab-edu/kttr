@@ -4,11 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-/**
- * 응답 시 서버에서 정의한 meta info (code, msg).
- *
- * @author Heeyeon.
- */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor

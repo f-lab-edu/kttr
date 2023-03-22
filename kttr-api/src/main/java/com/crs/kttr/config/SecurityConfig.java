@@ -1,15 +1,10 @@
-package com.crs.kttr.global.config;
+package com.crs.kttr.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-/**
- * Spring Security Configuration.
- *
- * @author Heeyeon.
- */
 @Configuration
 public class SecurityConfig {
   /**
