@@ -33,7 +33,7 @@ alt successful case
 else some kind of failure 
 
     w --> u : access_token 오류 알림, Exception\nstatusCode=400,errMsg=토큰 정보가 유효하지 않습니다.
-    u -> w : refresh 토큰으로 토큰 갱신 요청\n POST {url}/oauth/token HTTP/1.1
+    u -> w : refresh 토큰으로 토큰 갱신 요청\n POST {url}/token/refresh HTTP/1.1
     w -> w : refresh_token 유효성 검사
 
     alt successful case
