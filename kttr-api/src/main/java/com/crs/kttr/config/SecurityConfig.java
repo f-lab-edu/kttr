@@ -7,18 +7,21 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-  /**
-   *
-   * @param http
-   * @return
-   * @throws Exception
-   */
+  private static final String[] WHITE_LIST = {
+    "/health/**",
+    "/api/v1/guest/**"
+  };
+
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    return http.authorizeRequests((authz) -> authz
-        .requestMatchers("/health/**").permitAll()
-        .anyRequest()
-        .authenticated()
-    ).build();
+    http.csrf().disable();
+
+    return http
+      .securityMatcher("/api/**")
+      .authorizeRequests((authz) -> authz
+      .requestMatchers(WHITE_LIST).permitAll()
+      .anyRequest().authenticated()
+    )
+    .build();
   }
 }

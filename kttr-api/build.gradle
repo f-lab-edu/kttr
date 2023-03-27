@@ -20,7 +20,7 @@ jar {
 }
 
 dependencies {
-
+    implementation project(':kttr-core')
 }
 
 test {
