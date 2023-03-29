@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 public class MemberDto {
   private Long id;
 
-  private String signId;
+  private String signInId;
 
   public MemberDto(final Member member) {
     this.id = member.getId();
-    this.signId = member.getAccount().getSignInId();
+    this.signInId = member.getAccount().getSignInId();
 
   }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api/v1/guest/member")
 @RequiredArgsConstructor
-public class MemberRegisterApiController {
+public class RegisterMemberApiController {
 
   final MemberRegisterService service;
 
