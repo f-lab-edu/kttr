@@ -7,6 +7,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
+
   private static final String[] WHITE_LIST = {
     "/health/**",
     "/api/v1/guest/**"
