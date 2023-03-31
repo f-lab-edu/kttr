@@ -1,18 +1,16 @@
-package com.crs.kttr.member.service.impl;
+package com.crs.kttr.member.service;
 
 import com.crs.kttr.member.command.RegisterMemberCommand;
 import com.crs.kttr.member.model.Member;
-import com.crs.kttr.member.model.MemberRepository;
-import com.crs.kttr.member.service.MemberService;
+import com.crs.kttr.member.persistence.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService {
+public class MemberCRUDService {
   final MemberRepository repo;
 
-  @Override
   public Member register(RegisterMemberCommand command) {
     // TODO : signInId 중복 있는 확인 후 Exception 처리
 

@@ -1,7 +1,6 @@
-package com.crs.kttr.member.interfaces.dto;
+package com.crs.kttr.member.controller.dto;
 
 import com.crs.kttr.member.model.Member;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

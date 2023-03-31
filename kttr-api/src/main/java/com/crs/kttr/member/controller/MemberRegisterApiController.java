@@ -1,9 +1,9 @@
-package com.crs.kttr.member.interfaces;
+package com.crs.kttr.member.controller;
 
 import com.crs.kttr.global.dto.Response;
 import com.crs.kttr.member.application.MemberRegisterService;
-import com.crs.kttr.member.interfaces.dto.MemberDto;
-import com.crs.kttr.member.interfaces.dto.MemberRegisterRequest;
+import com.crs.kttr.member.controller.dto.MemberDto;
+import com.crs.kttr.member.controller.dto.MemberRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class MemberRegisterApiController {
   final MemberRegisterService service;
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<Response<MemberDto>> register(final @RequestBody MemberRegisterRequest req) {
-    return Response.ok(service.register(req.toCommand()));
+  public Response<MemberDto> register(final @RequestBody MemberRegisterRequest req) {
+    return Response.okk(service.register(req.toCommand()));
   }
 }
