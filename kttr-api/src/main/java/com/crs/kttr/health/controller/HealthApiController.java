@@ -1,4 +1,4 @@
-package com.crs.kttr.domain.health.interfaces;
+package com.crs.kttr.health.controller;
 
 import com.crs.kttr.global.dto.Response;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/health")
 public class HealthApiController {
   @GetMapping
-  public ResponseEntity<Response<String>> health() {
-    return Response.ok("OK");
+  public Response<String> health() {
+    return Response.okk("OK");
   }
 }

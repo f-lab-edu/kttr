@@ -24,4 +24,14 @@ public class Response<T> {
   public static <T> ResponseEntity<Response<T>> ok(final T data) {
     return of(HttpStatus.OK, ResponseMeta.EMPTY, data);
   }
+
+  public static <T> Response<T> of(final ResponseMeta meta,
+                                   final T data) {
+    return new Response<>(meta, data);
+  }
+
+  // TODO : Exception 정리하면서 다시 클래스 정리 예정
+  public static <T> Response<T> okk(final T data) {
+    return of(ResponseMeta.EMPTY, data);
+  }
 }
