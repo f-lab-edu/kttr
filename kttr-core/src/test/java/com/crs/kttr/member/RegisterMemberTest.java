@@ -1,7 +1,7 @@
 package com.crs.kttr.member;
 
 import com.crs.kttr.member.command.RegisterMemberCommand;
-import com.crs.kttr.member.service.MemberService;
+import com.crs.kttr.member.service.MemberCRUDService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 public class RegisterMemberTest {
 
   @MockBean
-  MemberService memberService;
+  MemberCRUDService memberService;
 
   @Test
   @DisplayName(value = "로그인 아이디가 중복이 있는 경우")
