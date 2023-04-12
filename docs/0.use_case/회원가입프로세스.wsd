@@ -1,0 +1,25 @@
+@startuml 회원가입 프로세스
+/'
+* Last Modified Date : 2023.03.06
+* Author : Kang Hee Yeon
+'/
+
+title : 회원가입 프로세스
+
+actor User as u
+participant was as w
+database DB as d
+
+u -> w : 회원가입 요청\nPOST {url}/user HTTP/1.1\n* RequestBody\n{"signInId": "aaa@bb.com", "password": "1234"}
+w -> w : request 검증
+w --> u : request가 유효하지 않는 경우, Exception\nstatusCode=400,errMsg=유효하지 않은 request입니다.
+
+w -> d : 이메일이 존재하는 지 질의
+d --> w : 존재 여부(T/F) 응답
+w --> u : 가입된 이메일이 존재하는 경우, Exception\nstatusCode=400,errMsg=가입된 이메일이 존재합니다.
+
+w -> d : 사용자 생성 및 저장
+d --> w : 저장 결과 응답
+w --> u : 회원 가입 생성 완료 응답
+
+@enduml

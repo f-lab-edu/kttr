@@ -1,0 +1,49 @@
+@startuml 로그인(인증/인가) 프로세스
+/'
+* Last Modified Date : 2023.03.03
+* Author : Kang Hee Yeon
+'/
+
+title : 로그인(인증/인가) 프로세스
+
+actor User as u
+participant was as w
+database DB as d
+
+u -> w : login 요청\nPOST {url}/sign-in HTTP/1.1\n* RequestBody\n{"signInId": "aaa@bb.com", "password": "1234"}
+w -> d : 로그인 아이디 질의\nsinInId=aaa@bb.com
+d --> w : user 정보 전달
+w --> u : user 없는 경우, Exception\nstatusCode=404, errMsg=사용자가 없습니다.
+w -> w : user 있는 경우,\n사용자 암호 검증 
+w --> u : 암호가 일치하지 않는 경우, Exception\nstatusCode=400,errMsg=암호가 일치하지 않습니다.
+w -> w : acess_token, refresh_token 생성
+    Note right w : JWT
+w -> d : token 생성 정보, 로그인 이력 저장
+w --> u : token 응답\nstatusCode=200\n\ntoken_type=bearer\naccess_token=1234\nexpires_in=12\nrefresh_token=4321\nrefresh_token_expires_in=43
+
+newpage
+
+u -> w : 데이터 요청 GET {url}/ HTTP1.1\nAuthorization: bearer <access_token> HTTP/1.1
+w -> w : access_token 유효성 확인
+
+alt successful case
+
+    w --> u : 정상일 시, 데이터 응답 
+
+else some kind of failure 
+
+    w --> u : access_token 오류 알림, Exception\nstatusCode=400,errMsg=토큰 정보가 유효하지 않습니다.
+    u -> w : refresh 토큰으로 토큰 갱신 요청\n POST {url}/token/refresh HTTP/1.1
+    w -> w : refresh_token 유효성 검사
+
+    alt successful case
+        w -> u : 새로운 access_token 발급
+
+    else some kind of failure
+        w --> u : refresh_token 오류 알림, Exception\nstatusCode=400,errMsg=토큰 정보가 유효하지 않습니다.
+
+        u -> w : login 요청
+    end
+end 
+
+@enduml
