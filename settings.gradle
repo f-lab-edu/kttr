@@ -1,5 +1,3 @@
 rootProject.name = 'kttr'
 include 'kttr-core'
 include 'kttr-api'
-include 'kttr-admin'
-
