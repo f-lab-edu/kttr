@@ -6,7 +6,6 @@ import com.crs.kttr.member.controller.dto.MemberDto;
 import com.crs.kttr.member.controller.dto.MemberRegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,6 +17,6 @@ public class RegisterMemberApiController {
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Response<MemberDto> register(final @RequestBody MemberRegisterRequest req) {
-    return Response.okk(service.register(req.toCommand()));
+    return Response.ok(service.register(req.toCommand()));
   }
 }

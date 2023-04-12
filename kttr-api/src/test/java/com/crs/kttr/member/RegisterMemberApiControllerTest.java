@@ -2,9 +2,9 @@ package com.crs.kttr.member;
 
 import com.crs.kttr.member.application.MemberRegisterService;
 import com.crs.kttr.member.command.RegisterMemberCommand;
-import com.crs.kttr.member.interfaces.RegisterMemberApiController;
-import com.crs.kttr.member.interfaces.dto.MemberDto;
-import com.crs.kttr.member.interfaces.dto.MemberRegisterRequest;
+import com.crs.kttr.member.controller.RegisterMemberApiController;
+import com.crs.kttr.member.controller.dto.MemberDto;
+import com.crs.kttr.member.controller.dto.MemberRegisterRequest;
 import com.crs.kttr.member.model.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
