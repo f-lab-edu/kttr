@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TrainMemberRepositoryImpl implements TrainMemberRepository {
-  private static Map<Long, TrainMember> store = new HashMap<>();
+  private Map<Long, TrainMember> store = new HashMap<>();
 
   @Override
   public void save(TrainMember member) {

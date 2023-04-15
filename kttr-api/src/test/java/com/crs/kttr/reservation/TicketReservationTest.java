@@ -1,4 +1,4 @@
-package com.crs.kttr.member;
+package com.crs.kttr.reservation;
 
 import com.crs.kttr.member.application.TrainMemberService;
 import com.crs.kttr.member.application.TrainMemberServiceImpl;
