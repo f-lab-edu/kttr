@@ -1,5 +1,8 @@
 package com.crs.kttr.product.ticket.domain;
 
+import lombok.Getter;
+
+@Getter
 public class TrainTicket {
   private Long id;
 
@@ -10,6 +13,18 @@ public class TrainTicket {
   private Integer issueQuantity;
 
   public TrainTicket(Long id, String name, Integer maxQuantity) {
+    if (id == null || id < 1L) {
+      throw new IllegalArgumentException();
+    }
+
+    if (name == null || name.isEmpty()) {
+      throw new IllegalArgumentException();
+    }
+
+    if (maxQuantity == null || maxQuantity < 1) {
+      throw new IllegalArgumentException();
+    }
+
     this.id = id;
     this.name = name;
     this.maxQuantity = maxQuantity;
@@ -23,21 +38,5 @@ public class TrainTicket {
       return;
     }
     throw new RuntimeException();
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public Integer getMaxQuantity() {
-    return maxQuantity;
-  }
-
-  public Integer getIssueQuantity() {
-    return issueQuantity;
   }
 }

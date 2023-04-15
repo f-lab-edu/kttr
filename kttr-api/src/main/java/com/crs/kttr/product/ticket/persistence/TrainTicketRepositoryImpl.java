@@ -4,9 +4,10 @@ import com.crs.kttr.product.ticket.domain.TrainTicket;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class TrainTicketRepositoryImpl implements TrainTicketRepository {
-  private static Map<Long, TrainTicket> store = new HashMap<>();
+  private Map<Long, TrainTicket> store = new ConcurrentHashMap<>();
 
   @Override
   public void save(TrainTicket ticket) {
