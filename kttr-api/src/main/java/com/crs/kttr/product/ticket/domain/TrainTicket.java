@@ -1,5 +1,6 @@
 package com.crs.kttr.product.ticket.domain;
 
+import io.micrometer.common.util.StringUtils;
 import lombok.Getter;
 
 @Getter
@@ -17,7 +18,7 @@ public class TrainTicket {
       throw new IllegalArgumentException();
     }
 
-    if (name == null || name.isEmpty()) {
+    if (StringUtils.isEmpty(name)) {
       throw new IllegalArgumentException();
     }
 
