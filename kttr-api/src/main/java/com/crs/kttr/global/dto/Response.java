@@ -14,7 +14,7 @@ public class Response<T> {
 
   private T data;
 
-  public static <T> ResponseEntity<Response<T>> ok(final HttpStatus status,
+  public static <T> ResponseEntity<Response<T>> error(final HttpStatus status,
                                                    final ResponseMeta meta,
                                                    final T data) {
     return ResponseEntity.status(status).body(new Response<>(meta, data));
