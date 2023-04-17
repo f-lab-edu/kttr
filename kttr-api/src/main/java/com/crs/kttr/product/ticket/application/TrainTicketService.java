@@ -1,10 +1,24 @@
 package com.crs.kttr.product.ticket.application;
 
-import com.crs.kttr.product.ticket.domain.TrainTicket;
+import com.crs.kttr.product.ticket.controller.dto.TrainTicketRegisterRequest;
+import com.crs.kttr.product.ticket.model.TrainTicket;
+import com.crs.kttr.product.ticket.persistence.TrainTicketRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-public interface TrainTicketService {
+import java.util.Optional;
 
-  void save(TrainTicket trainTicket);
+@Service
+@RequiredArgsConstructor
+public class TrainTicketService {
 
-  TrainTicket findTrainTicket(Long ticketId);
+  private final TrainTicketRepository repo;
+
+  public Optional<TrainTicket> findBy(Long ticketId) {
+    return repo.findById(ticketId);
+  }
+
+  public TrainTicket save(final TrainTicketRegisterRequest request) {
+    return repo.save(new TrainTicket(request.getName(), request.getMaxQuantity()));
+  }
 }
