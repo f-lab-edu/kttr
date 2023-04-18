@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(value = RegisterMemberController.class)
-public class RegisterMemberApiControllerTest {
+public class RegisterMemberControllerTest {
 
   @Autowired
   private ObjectMapper objectMapper;

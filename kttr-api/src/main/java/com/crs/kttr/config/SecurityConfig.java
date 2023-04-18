@@ -12,7 +12,9 @@ public class SecurityConfig {
 
   private static final String[] WHITE_LIST = {
     "/health/**",
-    "/api/v1/guest/**"
+    "/api/v1/guest/**",
+    "/api/v1/ticket/**",
+    "/api/v1/reserve/**"
   };
 
   @Bean

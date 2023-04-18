@@ -1,8 +1,8 @@
-package com.crs.kttr.reservation.controller;
+package com.crs.kttr.product.ticket.controller;
 
 import com.crs.kttr.global.dto.Response;
-import com.crs.kttr.reservation.application.TicketReservationService;
-import com.crs.kttr.reservation.controller.dto.TrainTicketReserveRequest;
+import com.crs.kttr.product.ticket.application.TrainTicketService;
+import com.crs.kttr.product.ticket.controller.dto.TrainTicketRegisterRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -12,14 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/reserve")
+@RequestMapping(value = "/api/v1/ticket")
 @RequiredArgsConstructor
-public class ReserveTrainTicketController {
+public class TrainTicketController {
 
-  final TicketReservationService service;
+  final TrainTicketService service;
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  public Response<String> reserve(final @Valid @RequestBody TrainTicketReserveRequest req) {
-    return Response.ok(service.reserve(req.getMemberId(), req.getTicketId()));
+  public Response<Boolean> register(final @Valid @RequestBody TrainTicketRegisterRequest req) {
+
+    service.register(req);
+
+    return Response.ok(Boolean.TRUE);
   }
 }

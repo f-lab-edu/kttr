@@ -18,7 +18,7 @@ public class TrainTicketService {
     return repo.findById(ticketId);
   }
 
-  public TrainTicket save(final TrainTicketRegisterRequest request) {
-    return repo.save(new TrainTicket(request.getName(), request.getMaxQuantity()));
+  public TrainTicket register(final TrainTicketRegisterRequest req) {
+    return repo.save(new TrainTicket(req.getName(), req.getMaxQuantity()));
   }
 }
