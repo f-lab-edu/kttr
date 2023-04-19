@@ -62,7 +62,4 @@ public class ReserveTrainTicketControllerTest {
       .andExpect(jsonPath("$.data").value("uuid"))
     ;
   }
-
-
-
 }
