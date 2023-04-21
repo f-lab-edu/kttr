@@ -8,20 +8,35 @@ public class TicketIssueTest {
   @Test
   @DisplayName(value = "티켓 발행 부하 테스트")
   public void issue() throws InterruptedException {
+    // 자원
     final Ticket ticket = new Ticket();
 
-    for (int i = 0; i < 200; i++) {
-      Thread thread1 = new Thread(
-        () -> ticket.issue()
-      );
-      Thread thread2 = new Thread(
-        () -> ticket.issue()
-      );
-      Thread.sleep(100);
-      thread1.start();
-      thread2.start();
-      System.out.println("threadId = " + thread1.getId() + ", ticket = " + ticket.toString());
-      System.out.println("threadId = " + thread2.getId() + ", ticket = " + ticket.toString());
-    }
+    // Thread1
+    Thread thread1 = new Thread(
+      () -> {
+        for (int i = 0; i < 100; i++) {
+          ticket.issue();
+          System.out.println("threadId = " + Thread.currentThread().getId() + ", ticket = " + ticket.toString());
+        }
+      }
+    );
+
+    // Thread2
+    Thread thread2 = new Thread(
+      () -> {
+        for (int i = 0; i < 100; i++) {
+          ticket.issue();
+
+          System.out.println("threadId = " + Thread.currentThread().getId() + ", ticket = " + ticket.toString());
+        }
+      }
+    );
+
+    thread1.start();
+    thread2.start();
+    thread1.join();
+    thread2.join();
+
+    System.out.println("ticket.toString() = " + ticket.toString());
   }
 }

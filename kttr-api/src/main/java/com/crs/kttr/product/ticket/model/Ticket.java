@@ -9,7 +9,7 @@ public class Ticket {
   private Integer issueQuantity;
 
   public Ticket() {
-    this.maxQuantity = 10;
+    this.maxQuantity = 100;
     this.issueQuantity = 0;
   }
 
@@ -17,6 +17,5 @@ public class Ticket {
     if (issueQuantity < maxQuantity) {
       issueQuantity++;
     }
-    return;
   }
 }
