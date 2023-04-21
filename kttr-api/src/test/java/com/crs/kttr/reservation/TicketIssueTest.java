@@ -51,6 +51,6 @@ public class TicketIssueTest {
       }
     }
 
-    Assertions.assertEquals(Boolean.TRUE, store.size() < 2000);
+    Assertions.assertEquals(Boolean.TRUE, store.size() == 2000);
   }
 }
