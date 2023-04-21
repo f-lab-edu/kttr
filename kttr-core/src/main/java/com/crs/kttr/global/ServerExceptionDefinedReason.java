@@ -1,18 +1,20 @@
-package com.crs.kttr.member.exception;
+package com.crs.kttr.global;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @Getter
-public enum MemberRegisterExceptionDefinedReason {
+public enum ServerExceptionDefinedReason {
 
   UNKNOWN_SERVER_ERROR(1000, "서버 오류 입니다.", "서버 오류 입니다", HttpStatus.INTERNAL_SERVER_ERROR),
   NOT_FOUND_RESOURCE(1004, "자료를 찾을 수 없습니다.", "자료를 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
 
   DUPLICATED_SIGNINID(1100, "이미 사용중인 아이디 입니다.", "이미 사용중인 아이디 입니다.", HttpStatus.BAD_REQUEST)
+
+
   ;
 
-  MemberRegisterExceptionDefinedReason(int code, String internalMsg, String msg, HttpStatus status) {
+  ServerExceptionDefinedReason(int code, String internalMsg, String msg, HttpStatus status) {
     this.code = code;
     this.internalMsg = internalMsg;
     this.msg = msg;

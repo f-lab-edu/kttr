@@ -10,9 +10,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+  // TODO : 인증/인가 작업 후 ticket, reserve 필터 제거 예정
   private static final String[] WHITE_LIST = {
     "/health/**",
-    "/api/v1/guest/**"
+    "/api/v1/guest/**",
+    "/api/v1/ticket/**",
+    "/api/v1/reserve/**"
   };
 
   @Bean

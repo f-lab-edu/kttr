@@ -1,5 +1,6 @@
 package com.crs.kttr.member.exception;
 
+import com.crs.kttr.global.ServerExceptionDefinedReason;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -13,15 +14,10 @@ public class MemberRegisterException extends RuntimeException {
 
   private HttpStatus status;
 
-  public MemberRegisterException(int code, String msg, HttpStatus status, String message, Throwable cause) {
-    super(message, cause);
-    this.code = code;
-    this.msg = msg;
-    this.status = status;
-  }
-
-  public MemberRegisterException(MemberRegisterExceptionDefinedReason reason) {
-    // TODO : Throwable cause null 테스트 필요 -> 오류 확인 후 재작성 필요
-    this(reason.getCode(), reason.getMsg(), reason.getStatus(), null, null);
+  public MemberRegisterException(ServerExceptionDefinedReason reason) {
+    this.code = reason.getCode();
+    this.msg = reason.getMsg();
+    this.internalMsg = reason.getInternalMsg();
+    this.status = reason.getStatus();
   }
 }

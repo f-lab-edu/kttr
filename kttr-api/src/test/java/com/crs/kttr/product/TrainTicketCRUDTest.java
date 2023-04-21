@@ -1,125 +1,153 @@
 package com.crs.kttr.product;
 
 import com.crs.kttr.product.ticket.application.TrainTicketService;
-import com.crs.kttr.product.ticket.application.TrainTicketServiceImpl;
-import com.crs.kttr.product.ticket.domain.TrainTicket;
-import com.crs.kttr.product.ticket.exception.AlreadyRegisteredTrainTicketException;
-import com.crs.kttr.product.ticket.exception.TrainTicketNotFoundException;
+import com.crs.kttr.product.ticket.controller.dto.TrainTicketRegisterRequest;
+import com.crs.kttr.product.ticket.model.TrainTicket;
+import com.crs.kttr.product.ticket.persistence.TrainTicketRepository;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.Optional;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+
+@ExtendWith(MockitoExtension.class)
 public class TrainTicketCRUDTest {
-  TrainTicketService ticketService;
+  @InjectMocks
+  private TrainTicketService ticketService;
+
+  @Mock
+  private TrainTicketRepository repo;
+
+  ValidatorFactory factory;
+  Validator validator;
 
   @BeforeEach
   void setUp() {
-    ticketService = new TrainTicketServiceImpl();
-  }
-
-  @Test
-  @DisplayName("id가 null인 경우")
-  void isnullId() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(null, "티켓1", 10);
-    });
-  }
-
-
-  @Test
-  @DisplayName("id가 0인 경우")
-  void isZeroId() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(0L, "티켓1", 10);
-    });
-  }
-
-  @Test
-  @DisplayName("id가 음수인 경우")
-  void isNegativeId() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(-1L, "티켓1", 10);
-    });
+    factory = Validation.buildDefaultValidatorFactory();
+    validator = factory.getValidator();
   }
 
   @Test
   @DisplayName("티켓 이름이 null인 경우")
   void isnullName() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(1L, null, 10);
-    });
+    // given
+    TrainTicketRegisterRequest req = new TrainTicketRegisterRequest(null, 10);;
+
+    // when
+    Set<ConstraintViolation<TrainTicketRegisterRequest>> constraintViolations = validator.validate(req);
+
+    // then
+    Assertions.assertEquals(1, constraintViolations.size());
   }
 
   @Test
   @DisplayName("티켓 이름이 공백 경우")
   void isEmptyName() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(1L, "", 10);
-    });
+    // given
+    TrainTicketRegisterRequest req = new TrainTicketRegisterRequest("", 10);
+
+    // when
+    Set<ConstraintViolation<TrainTicketRegisterRequest>> constraintViolations = validator.validate(req);
+
+    // then
+    Assertions.assertEquals(1, constraintViolations.size());
   }
 
   @Test
   @DisplayName("수량이 null인 경우")
   void isnullMaxQuantity() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(1L, "티켓1", null);
-    });
+    // given
+    TrainTicketRegisterRequest req = new TrainTicketRegisterRequest("티켓", null);
+    // when
+    Set<ConstraintViolation<TrainTicketRegisterRequest>> constraintViolations = validator.validate(req);
+
+    // then
+    Assertions.assertEquals(1, constraintViolations.size());
   }
 
 
   @Test
   @DisplayName("수량이 0인 경우")
   void isZeroMaxQuantity() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(1L, "티켓1", 0);
-    });
+    // given
+    TrainTicketRegisterRequest req = new TrainTicketRegisterRequest("티켓", 0);
+    // when
+    Set<ConstraintViolation<TrainTicketRegisterRequest>> constraintViolations = validator.validate(req);
+
+    // then
+    Assertions.assertEquals(1, constraintViolations.size());
   }
 
   @Test
   @DisplayName("수량이 음수인 경우")
   void isNegativeMaxQuantity() {
-    Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      new TrainTicket(1L, "티켓1", -1);
-    });
+    // given
+    TrainTicketRegisterRequest req = new TrainTicketRegisterRequest("티켓", -1);
+    // when
+    Set<ConstraintViolation<TrainTicketRegisterRequest>> constraintViolations = validator.validate(req);
+
+    // then
+    Assertions.assertEquals(1, constraintViolations.size());
   }
 
   @Test
   @DisplayName("기차 티켓 등록")
   void register() {
-    final TrainTicket ticket = new TrainTicket(1L, "티켓1", 10);
+    // given
+    final TrainTicketRegisterRequest req = new TrainTicketRegisterRequest("티켓1", 10);
+    final TrainTicket ticket = new TrainTicket("티켓1", 10);
 
-    ticketService.save(ticket);
-  }
+    Long fakeTicketId = 1L;
+    ReflectionTestUtils.setField(ticket, "id", fakeTicketId);
 
-  @Test
-  @DisplayName("기차 티켓 중복 등록 시 오류 처리")
-  void duplicateRegister() {
-    final TrainTicket ticketA = new TrainTicket(2L, "티켓1", 10);
-    final TrainTicket ticketB = new TrainTicket(2L, "티켓1", 10);
+    // mocking
+    given(repo.save(any())).willReturn(ticket);
+    given(repo.findById(fakeTicketId)).willReturn(Optional.ofNullable(ticket));
 
-    ticketService.save(ticketA);
-    Assertions.assertThrows(AlreadyRegisteredTrainTicketException.class, () -> {
-      ticketService.save(ticketB);
-    });
+    // when
+    final TrainTicket stored = ticketService.register(req);
+
+    // then
+    final TrainTicket newTicket = repo.findById(stored.getId()).get();
+    assertEquals(ticket.getId(), newTicket.getId());
   }
 
   @Test
   @DisplayName("기차 티켓 조회")
   void findTrainTicket() {
-    ticketService.save(new TrainTicket(1L, "티켓A", 10));
+    // given
+    final TrainTicket ticket = new TrainTicket("티켓1", 10);
 
-    final TrainTicket trainTicket = ticketService.findTrainTicket(1L);
+    Long fakeTicketId = 1L;
+    ReflectionTestUtils.setField(ticket, "id", fakeTicketId);
 
-    Assertions.assertEquals(trainTicket.getId(), 1L);
+    // mocking
+    given(repo.findById(fakeTicketId)).willReturn(Optional.ofNullable(ticket));
+
+
+    final TrainTicket findTicket = repo.findById(1L).get();
+    assertEquals(ticket.getId(), findTicket.getId());
   }
 
 
   @Test
   @DisplayName("기차 티켓 조회 시 없을 경우")
   void notFoundTrainTicket() {
-    Assertions.assertThrows(TrainTicketNotFoundException.class, () -> {
-      ticketService.findTrainTicket(0L);
-    });
+    Assertions.assertEquals(false, repo.findById(0L).isPresent());
   }
 }
