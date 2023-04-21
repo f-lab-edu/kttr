@@ -17,7 +17,7 @@ public class TicketIssueTest {
   private static final Integer THREAD_PARTIES = 50;
   @Test
   @DisplayName(value = "티켓 발행 부하 테스트")
-  public void issue() throws InterruptedException {
+  public void issue() {
     // given
     final TrainTicket ticket = new TrainTicket("테스트", 100);
 
