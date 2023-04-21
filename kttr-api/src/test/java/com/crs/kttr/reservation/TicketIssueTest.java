@@ -7,50 +7,65 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;
+import java.util.concurrent.*;
+import java.util.stream.IntStream;
 
 public class TicketIssueTest {
+  private static final Integer USER_COUNT = 10000;
+  private static final Integer THREAD_POOL_SIZE = 2000;
+
+  private static final Integer THREAD_PARTIES = 50;
   @Test
   @DisplayName(value = "티켓 발행 부하 테스트")
   public void issue() throws InterruptedException {
-    // 자원
-    final TrainTicket ticket = new TrainTicket("테스트", 2000);
+    // given
+    final TrainTicket ticket = new TrainTicket("테스트", 100);
 
-    final Set<Integer> store = Sets.newHashSet();
+    ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+    Set<Integer> store = Sets.newHashSet();
 
-    // Thread1
-    Thread thread1 = new Thread(
-      () -> {
-        for (int i = 0; i < 1000; i++) {
-          final Integer issued = ticket.issue();
-          store.add(issued);
-          System.out.println("threadId = " + Thread.currentThread().getId() + ", ticket = " + issued);
-        }
-      }
-    );
+    CyclicBarrier cyclicBarrier = new CyclicBarrier(THREAD_PARTIES, () -> {
+      final Integer issued = ticket.issue();
+      store.add(issued);
+    });
 
-    // Thread2
-    Thread thread2 = new Thread(
-      () -> {
-        for (int i = 0; i < 1000; i++) {
-          final Integer issued = ticket.issue();
-          store.add(issued);
-          System.out.println("threadId = " + Thread.currentThread().getId() + ", ticket = " + issued);
-        }
-      }
-    );
+    IntStream.range(0, USER_COUNT).forEach( e -> {
+      UserThread thread = new UserThread(cyclicBarrier, "사용자_" + e);
+      executor.execute(thread);
+    });
 
-    thread1.start();
-    thread2.start();
-    thread1.join();
-    thread2.join();
+    executor.shutdown();
+    while (!executor.isTerminated()) {
+    }
 
-    System.out.println("ticket.toString() = " + ticket.toString());
-    for (int i = 1; i <= 2000; i++) {
+    for (int i = 1; i <= ticket.getMaxQuantity(); i++) {
       if (!store.contains(i)) {
         System.out.println("i = " + i);
       }
     }
+    System.out.println("ticket.toString() = " + ticket.toString());
 
-    Assertions.assertEquals(Boolean.TRUE, store.size() == 2000);
+    Assertions.assertEquals(Boolean.TRUE, store.size() == ticket.getMaxQuantity());
+  }
+
+  static class UserThread implements Runnable {
+    private CyclicBarrier cyclicBarrier;
+    private String threadName;
+
+    public UserThread(CyclicBarrier cyclicBarrier, String threadName) {
+      this.cyclicBarrier = cyclicBarrier;
+      this.threadName = threadName;
+    }
+
+    @Override
+    public void run() {
+      try {
+        System.out.println(threadName);
+        Thread.sleep(1000);
+        cyclicBarrier.await();
+      } catch (InterruptedException | BrokenBarrierException e) {
+        e.printStackTrace();
+      }
+    }
   }
 }

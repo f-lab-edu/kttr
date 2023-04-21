@@ -31,8 +31,9 @@ public class TrainTicket {
   public Integer issue() {
     if (!issueQuantity.compareAndSet(maxQuantity, this.issueQuantity.intValue())) {
       // incrementAndGet
-      this.issueQuantity.getAndIncrement();
-      return this.issueQuantity.intValue();
+//      this.issueQuantity.getAndIncrement();
+//      return this.issueQuantity.intValue();
+      return this.issueQuantity.incrementAndGet();
     }
 
     return this.issueQuantity.intValue();
