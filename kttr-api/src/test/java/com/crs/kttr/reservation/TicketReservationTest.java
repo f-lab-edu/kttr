@@ -1,10 +1,9 @@
 package com.crs.kttr.reservation;
 
-import com.crs.kttr.member.application.FindMemberService;
+import com.crs.kttr.member.application.MemberFindService;
 import com.crs.kttr.member.exception.MemberNotFoundException;
 import com.crs.kttr.member.model.Member;
 import com.crs.kttr.product.ticket.application.TrainTicketService;
-import com.crs.kttr.product.ticket.controller.dto.TrainTicketRegisterRequest;
 import com.crs.kttr.product.ticket.exception.TrainTicketNotFoundException;
 import com.crs.kttr.product.ticket.model.TrainTicket;
 import com.crs.kttr.reservation.application.TicketReservationService;
@@ -39,7 +38,7 @@ public class TicketReservationTest {
   private TicketReservationService service;
 
   @Mock
-  private FindMemberService memberService;
+  private MemberFindService memberService;
 
   @Mock
   private TrainTicketService ticketService;
