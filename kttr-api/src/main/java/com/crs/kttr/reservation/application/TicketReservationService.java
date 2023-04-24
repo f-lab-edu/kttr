@@ -28,6 +28,8 @@ public class TicketReservationService {
     final TrainTicket ticket = ticketService.findBy(ticketId)
       .orElseThrow(() -> new TrainTicketNotFoundException(ServerExceptionDefinedReason.NOT_FOUND_RESOURCE));
 
+    ticket.issue();
+
     final ReservationDetails stored = repo.save(new ReservationDetails(member.getId(), ticket.getId()));
 
     return stored.getReservationCode();
