@@ -1,7 +1,7 @@
 package com.crs.kttr.reservation.application;
 
 import com.crs.kttr.global.ServerExceptionDefinedReason;
-import com.crs.kttr.member.application.FindMemberService;
+import com.crs.kttr.member.application.MemberFindService;
 import com.crs.kttr.member.exception.MemberNotFoundException;
 import com.crs.kttr.member.model.Member;
 import com.crs.kttr.product.ticket.application.TrainTicketService;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TicketReservationService {
-  private final FindMemberService memberService;
+  private final MemberFindService memberService;
 
   private final TrainTicketService ticketService;
 

@@ -1,16 +1,16 @@
 package com.crs.kttr.product.ticket.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Table(name = "train_ticket")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @EqualsAndHashCode(of = "id")
+@ToString
 public class TrainTicket {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,20 +20,22 @@ public class TrainTicket {
 
   private Integer maxQuantity;
 
-  private Integer issueQuantity;
+  private AtomicInteger issueQuantity;
 
   public TrainTicket(String name, Integer maxQuantity) {
     this.name = name;
     this.maxQuantity = maxQuantity;
-    this.issueQuantity = 0;
+    this.issueQuantity = new AtomicInteger(0);
   }
 
-  public void issue() {
-    if (issueQuantity < maxQuantity) {
-      this.issueQuantity++;
-
-      return;
+  public Integer issue() {
+    if (!issueQuantity.compareAndSet(maxQuantity, this.issueQuantity.intValue())) {
+      // incrementAndGet
+//      this.issueQuantity.getAndIncrement();
+//      return this.issueQuantity.intValue();
+      return this.issueQuantity.incrementAndGet();
     }
-    throw new RuntimeException();
+
+    return this.issueQuantity.intValue();
   }
 }
