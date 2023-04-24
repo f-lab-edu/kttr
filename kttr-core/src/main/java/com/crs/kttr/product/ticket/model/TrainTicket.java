@@ -3,6 +3,7 @@ package com.crs.kttr.product.ticket.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
@@ -20,22 +21,31 @@ public class TrainTicket {
 
   private Integer maxQuantity;
 
-  private AtomicInteger issueQuantity;
+  private Integer issueQuantity;
+
+  private Boolean updating;
 
   public TrainTicket(String name, Integer maxQuantity) {
     this.name = name;
     this.maxQuantity = maxQuantity;
-    this.issueQuantity = new AtomicInteger(0);
+    this.issueQuantity = new AtomicInteger(0).intValue();
+    this.updating = Boolean.FALSE;
   }
 
-  public Integer issue() {
-    if (!issueQuantity.compareAndSet(maxQuantity, this.issueQuantity.intValue())) {
-      // incrementAndGet
-//      this.issueQuantity.getAndIncrement();
-//      return this.issueQuantity.intValue();
-      return this.issueQuantity.incrementAndGet();
+  public void issue() {
+    final AtomicBoolean atomicUpdating = new AtomicBoolean(this.updating);
+    if (atomicUpdating.get()) {
+      return;
     }
 
-    return this.issueQuantity.intValue();
+    this.updating = !this.updating;
+
+    final AtomicInteger atomicIssueQuantity = new AtomicInteger(this.issueQuantity);
+
+    if (!atomicIssueQuantity.compareAndSet(maxQuantity, this.issueQuantity.intValue())) {
+      this.issueQuantity = atomicIssueQuantity.incrementAndGet();
+    }
+
+    this.updating = !this.updating;
   }
 }

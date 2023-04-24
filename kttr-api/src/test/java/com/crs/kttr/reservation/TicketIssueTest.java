@@ -25,8 +25,9 @@ public class TicketIssueTest {
     Set<Integer> store = Sets.newHashSet();
 
     CyclicBarrier cyclicBarrier = new CyclicBarrier(THREAD_PARTIES, () -> {
-      final Integer issued = ticket.issue();
-      store.add(issued);
+      ticket.issue();
+
+      store.add(ticket.getIssueQuantity());
     });
 
     IntStream.range(0, USER_COUNT).forEach( e -> {

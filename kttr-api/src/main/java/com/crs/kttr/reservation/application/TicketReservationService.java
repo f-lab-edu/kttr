@@ -11,6 +11,7 @@ import com.crs.kttr.reservation.model.ReservationDetails;
 import com.crs.kttr.reservation.persistence.ReservationDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class TicketReservationService {
 
   private final ReservationDetailsRepository repo;
 
+  @Transactional
   public String reserve(Long memberId, Long ticketId) {
     final Member member = memberService.findById(memberId)
       .orElseThrow(() -> new MemberNotFoundException(ServerExceptionDefinedReason.NOT_FOUND_RESOURCE));

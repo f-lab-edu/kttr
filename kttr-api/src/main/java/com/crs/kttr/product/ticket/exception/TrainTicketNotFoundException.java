@@ -1,8 +1,10 @@
 package com.crs.kttr.product.ticket.exception;
 
 import com.crs.kttr.global.ServerExceptionDefinedReason;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class TrainTicketNotFoundException extends RuntimeException {
 
   private int code;
