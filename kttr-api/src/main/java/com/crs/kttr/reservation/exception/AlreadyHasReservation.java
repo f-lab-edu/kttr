@@ -1,12 +1,12 @@
-package com.crs.kttr.product.ticket.exception;
+package com.crs.kttr.reservation.exception;
 
 import com.crs.kttr.global.BusinessLogicException;
 import com.crs.kttr.global.ServerExceptionDefinedReason;
 import lombok.Getter;
 
 @Getter
-public class TrainTicketNotFoundException extends BusinessLogicException {
-  public TrainTicketNotFoundException(final ServerExceptionDefinedReason reason) {
+public class AlreadyHasReservation extends BusinessLogicException {
+  public AlreadyHasReservation(ServerExceptionDefinedReason reason) {
     super(reason.getCode(), reason.getMsg(), reason.getInternalMsg(), reason.getStatus());
   }
 }

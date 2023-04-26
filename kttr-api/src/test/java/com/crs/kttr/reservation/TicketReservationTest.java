@@ -9,7 +9,7 @@ import com.crs.kttr.product.ticket.model.TrainTicket;
 import com.crs.kttr.reservation.application.TicketReservationService;
 import com.crs.kttr.reservation.controller.dto.TrainTicketReserveRequest;
 import com.crs.kttr.reservation.model.ReservationDetails;
-import com.crs.kttr.reservation.persistence.ReservationDetailsRepository;
+import com.crs.kttr.reservation.service.ReservationDetailsCRUDService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -29,6 +29,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,7 +45,7 @@ public class TicketReservationTest {
   private TrainTicketService ticketService;
 
   @Mock
-  private ReservationDetailsRepository repo;
+  private ReservationDetailsCRUDService reserveService;
 
   ValidatorFactory factory;
   Validator validator;
@@ -90,11 +91,13 @@ public class TicketReservationTest {
     final ReservationDetails reservationDetails = new ReservationDetails(1L, 1L);
 
     ReflectionTestUtils.setField(reservationDetails, "id", 1L);
+    ReflectionTestUtils.setField(member, "id", 1L);
+    ReflectionTestUtils.setField(ticket, "id", 1L);
 
     // mocking
     given(memberService.findById(any())).willReturn(Optional.ofNullable(member));
     given(ticketService.findBy(any())).willReturn(Optional.ofNullable(ticket));
-    given(repo.save(any())).willReturn(reservationDetails);
+    given(reserveService.save(anyLong(), anyLong())).willReturn(reservationDetails);
 
     // when
     final String reservationCode = service.reserve(1L, 1L);

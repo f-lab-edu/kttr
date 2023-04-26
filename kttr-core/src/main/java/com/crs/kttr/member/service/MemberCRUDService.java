@@ -1,7 +1,5 @@
 package com.crs.kttr.member.service;
 
-import com.crs.kttr.member.exception.MemberRegisterException;
-import com.crs.kttr.global.ServerExceptionDefinedReason;
 import com.crs.kttr.member.command.RegisterMemberCommand;
 import com.crs.kttr.member.model.Member;
 import com.crs.kttr.member.persistence.MemberRepository;
@@ -21,11 +19,6 @@ public class MemberCRUDService {
   }
 
   public Member register(RegisterMemberCommand command) {
-    final Boolean exists = repo.existsByAccount_SignInId(command.getSignInId());
-    if (exists) {
-      throw new MemberRegisterException(ServerExceptionDefinedReason.DUPLICATED_SIGNINID);
-    }
-
     return repo.save(new Member(
         command.getSignInId(),
         command.getSignInPassword(),
@@ -33,5 +26,9 @@ public class MemberCRUDService {
         command.getPhoneNumber()
       )
     );
+  }
+
+  public Boolean exists(String signInId) {
+    return repo.existsByAccount_SignInId(signInId);
   }
 }
