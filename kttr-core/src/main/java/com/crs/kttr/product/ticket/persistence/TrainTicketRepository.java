@@ -8,7 +8,4 @@ import org.springframework.data.jpa.repository.Lock;
 import java.util.Optional;
 
 public interface TrainTicketRepository extends JpaRepository<TrainTicket, Long> {
-  @Lock(LockModeType.OPTIMISTIC)
-  @Override
-  Optional<TrainTicket> findById(Long id);
 }

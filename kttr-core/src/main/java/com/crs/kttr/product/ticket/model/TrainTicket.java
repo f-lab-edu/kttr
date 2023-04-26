@@ -23,25 +23,24 @@ public class TrainTicket {
 
   private Integer issueQuantity;
 
-  @Version
-  private Long version;
+//  @Version
+//  private Long version;
 
   public TrainTicket(String name, Integer maxQuantity) {
     this.name = name;
     this.maxQuantity = maxQuantity;
-    this.issueQuantity = new AtomicInteger(0).intValue();
+    this.issueQuantity = 0;
   }
 
   public void issue() {
-    final AtomicInteger atomicIssueQuantity = new AtomicInteger(this.issueQuantity);
-    if (isSoldOut(atomicIssueQuantity)) {
+    if (isSoldOut(this.issueQuantity)) {
       return;
     }
 
-    this.issueQuantity = atomicIssueQuantity.incrementAndGet();
+    this.issueQuantity = this.issueQuantity + 1;
   }
 
-  private Boolean isSoldOut(AtomicInteger atomicIssueQuantity) {
-    return atomicIssueQuantity.compareAndSet(maxQuantity, this.issueQuantity.intValue());
+  private Boolean isSoldOut(Integer issueQuantity) {
+    return issueQuantity >= maxQuantity;
   }
 }

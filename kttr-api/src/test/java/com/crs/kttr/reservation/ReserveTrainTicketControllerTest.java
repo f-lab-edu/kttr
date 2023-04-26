@@ -1,9 +1,5 @@
 package com.crs.kttr.reservation;
 
-import com.crs.kttr.product.ticket.application.TrainTicketService;
-import com.crs.kttr.product.ticket.controller.TrainTicketController;
-import com.crs.kttr.product.ticket.controller.dto.TrainTicketRegisterRequest;
-import com.crs.kttr.product.ticket.model.TrainTicket;
 import com.crs.kttr.reservation.application.TicketReservationService;
 import com.crs.kttr.reservation.controller.ReserveTrainTicketController;
 import com.crs.kttr.reservation.controller.dto.TrainTicketReserveRequest;
