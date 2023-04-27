@@ -13,11 +13,6 @@ public class RegisterMemberTest {
   MemberCRUDService memberService;
 
   @Test
-  @DisplayName(value = "로그인 아이디가 중복이 있는 경우")
-  void duplicated_signInId() {
-  }
-
-  @Test
   @DisplayName(value = "로그인 아이디가 null인 경우")
   void isnull_signInId()  {
     Assertions.assertThrows(jakarta.validation.ConstraintViolationException.class, () -> {
@@ -96,5 +91,4 @@ public class RegisterMemberTest {
         .build();
     });
   }
-
 }

@@ -2,6 +2,7 @@ package com.crs.kttr.product.ticket.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.repository.Lock;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,22 +21,26 @@ public class TrainTicket {
 
   private Integer maxQuantity;
 
-  private AtomicInteger issueQuantity;
+  private Integer issueQuantity;
+
+//  @Version
+//  private Long version;
 
   public TrainTicket(String name, Integer maxQuantity) {
     this.name = name;
     this.maxQuantity = maxQuantity;
-    this.issueQuantity = new AtomicInteger(0);
+    this.issueQuantity = 0;
   }
 
-  public Integer issue() {
-    if (!issueQuantity.compareAndSet(maxQuantity, this.issueQuantity.intValue())) {
-      // incrementAndGet
-//      this.issueQuantity.getAndIncrement();
-//      return this.issueQuantity.intValue();
-      return this.issueQuantity.incrementAndGet();
+  public void issue() {
+    if (isSoldOut(this.issueQuantity)) {
+      return;
     }
 
-    return this.issueQuantity.intValue();
+    this.issueQuantity = this.issueQuantity + 1;
+  }
+
+  private Boolean isSoldOut(Integer issueQuantity) {
+    return issueQuantity >= maxQuantity;
   }
 }
