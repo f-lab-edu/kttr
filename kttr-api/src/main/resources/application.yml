@@ -5,6 +5,19 @@ spring:
   application:
     name: kttr-api
 
+  redis:
+    redisson:
+      config: | 
+        singleServerConfig:
+          address: redis://localhost:60
+          username: kttr-server
+          password: kttr!@#
+          connectionPoolSize: 100
+          connectionMinimumIdleSize: 100
+          connectionPoolSize: 100
+          tcpNoDelay: true
+        maxCleanUpDelay: 30
+
   jpa:
     database-platform: H2
     show-sql: true
