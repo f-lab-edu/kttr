@@ -33,20 +33,20 @@ public class ReserveTrainTicketRaceConditionTest {
   @DisplayName("레이스 컨디션_티켓 예약")
   void reserve_with_race_condition() throws InterruptedException {
 
-    ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-    CyclicBarrier cyclicBarrier = new CyclicBarrier(THREAD_PARTIES, () -> {
-      // when
-      service.reserve(1L, 1L);
-    });
-
-    IntStream.range(0, USER_COUNT).forEach(e -> {
-      UserThread thread = new UserThread(cyclicBarrier, "사용자_" + e);
-      executor.execute(thread);
-    });
-
-    executor.shutdown();
-    while (!executor.isTerminated()) {
-    }
+//    ExecutorService executor = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
+//    CyclicBarrier cyclicBarrier = new CyclicBarrier(THREAD_PARTIES, () -> {
+//      // when
+//      service.reserve(1L, 1L);
+//    });
+//
+//    IntStream.range(0, USER_COUNT).forEach(e -> {
+//      UserThread thread = new UserThread(cyclicBarrier, "사용자_" + e);
+//      executor.execute(thread);
+//    });
+//
+//    executor.shutdown();
+//    while (!executor.isTerminated()) {
+//    }
 
     CountDownLatch latch = new CountDownLatch(100);
     for (int i=0; i < 100; i++) {

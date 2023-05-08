@@ -1,10 +1,9 @@
 package com.crs.kttr.product.ticket.model;
 
+import com.crs.kttr.global.ServerExceptionDefinedReason;
+import com.crs.kttr.product.exception.TrainTicketOutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.jpa.repository.Lock;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Entity
 @Table(name = "train_ticket")
@@ -23,9 +22,6 @@ public class TrainTicket {
 
   private Integer issueQuantity;
 
-//  @Version
-//  private Long version;
-
   public TrainTicket(String name, Integer maxQuantity) {
     this.name = name;
     this.maxQuantity = maxQuantity;
@@ -34,7 +30,7 @@ public class TrainTicket {
 
   public void issue() {
     if (isSoldOut(this.issueQuantity)) {
-      return;
+      throw new TrainTicketOutOfStockException(ServerExceptionDefinedReason.TRAIN_TICKET_OUT_OF_STOCK);
     }
 
     this.issueQuantity = this.issueQuantity + 1;
