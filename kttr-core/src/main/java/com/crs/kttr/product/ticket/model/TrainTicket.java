@@ -29,14 +29,10 @@ public class TrainTicket {
   }
 
   public void issue() {
-    if (isSoldOut(this.issueQuantity)) {
-      throw new TrainTicketOutOfStockException(ServerExceptionDefinedReason.TRAIN_TICKET_OUT_OF_STOCK);
-    }
-
-    this.issueQuantity = this.issueQuantity + 1;
+    this.issueQuantity += 1;
   }
 
-  private Boolean isSoldOut(Integer issueQuantity) {
-    return issueQuantity >= maxQuantity;
+  public Boolean isSoldOut() {
+    return this.issueQuantity >= this.maxQuantity;
   }
 }

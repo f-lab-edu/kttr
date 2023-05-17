@@ -1,16 +1,25 @@
 package com.crs.kttr.global.service;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-@AllArgsConstructor
-@Log4j2
+@Component
+@RequiredArgsConstructor
 public class RedisLockRunner {
   private final RedissonClient client;
+
+  public void setStock(String key, int amount){
+    client.getBucket(key).set(amount);
+  }
+
+  public int currentStock(String key) {
+   return (int) client.getBucket(key).get();
+  }
 
   public void run(String lockName, Runnable process) {
     final RLock lock = client.getLock(lockName);
@@ -23,7 +32,6 @@ public class RedisLockRunner {
         process.run();
       }
     } catch (Exception e) {
-      log.error(e);
       throw new RuntimeException(e);
     } finally {
       if (res) {

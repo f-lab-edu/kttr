@@ -1,0 +1,50 @@
+# train_ticket
+INSERT INTO train_ticket (name, max_quantity, issue_quantity) VALUES ('티켓', 20, 0);
+
+# member
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test1@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test2@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test3@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test4@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test5@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test6@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test7@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test8@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test9@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test10@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test11@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test12@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test13@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test14@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test15@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test16@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test17@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test18@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test19@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test20@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test21@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test22@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test23@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test24@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test25@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test26@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test27@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test28@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test29@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test30@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test31@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test32@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test33@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test34@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test35@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test36@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test37@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test38@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test39@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test40@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test41@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test42@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test43@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test44@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test45@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
+

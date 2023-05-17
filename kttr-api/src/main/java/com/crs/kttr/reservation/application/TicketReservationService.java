@@ -5,21 +5,21 @@ import com.crs.kttr.global.service.RedisLockRunner;
 import com.crs.kttr.member.application.MemberFindService;
 import com.crs.kttr.member.exception.MemberNotFoundException;
 import com.crs.kttr.member.model.Member;
+import com.crs.kttr.product.exception.TrainTicketOutOfStockException;
 import com.crs.kttr.product.ticket.application.TrainTicketService;
 import com.crs.kttr.product.ticket.exception.TrainTicketNotFoundException;
+import com.crs.kttr.product.ticket.model.Stock;
 import com.crs.kttr.product.ticket.model.TrainTicket;
 import com.crs.kttr.reservation.exception.AlreadyHasReservation;
 import com.crs.kttr.reservation.service.ReservationDetailsCRUDService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RedissonClient;
-import org.redisson.client.RedisClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Service
-@Slf4j
+@RequiredArgsConstructor
 public class TicketReservationService {
   private static final String START_TICKET_ISSUE_JOB_LOCK_NAME_PREFIX = "ticket:";
 
@@ -31,32 +31,36 @@ public class TicketReservationService {
 
   private final RedisLockRunner runner;
 
-  public TicketReservationService(MemberFindService memberService,
-                                  TrainTicketService ticketService,
-                                  ReservationDetailsCRUDService reserveService,
-                                  RedissonClient client) {
-    this.memberService = memberService;
-    this.ticketService = ticketService;
-    this.reserveService = reserveService;
-    this.runner = new RedisLockRunner(client);
-  }
-
   @Transactional
   public String reserve(Long memberId, Long ticketId) {
-    final Member member = memberService.findById(memberId)
-      .orElseThrow(() -> new MemberNotFoundException(ServerExceptionDefinedReason.NOT_FOUND_RESOURCE));
+    final String lockName = String.format("%s%d", START_TICKET_ISSUE_JOB_LOCK_NAME_PREFIX, ticketId);
 
-    final TrainTicket ticket = ticketService.findBy(ticketId)
-      .orElseThrow(() -> new TrainTicketNotFoundException(ServerExceptionDefinedReason.NOT_FOUND_RESOURCE));
+    AtomicReference<String> reservationCode = new AtomicReference<>("");
+    runner.run(lockName, () -> {
+      final Member member = memberService.find(memberId)
+        .orElseThrow(() -> new MemberNotFoundException(ServerExceptionDefinedReason.NOT_FOUND_RESOURCE));
 
-    final Boolean existsReservation = reserveService.existsReservation(member.getId(), ticketId);
-    if (existsReservation) {
-      throw new AlreadyHasReservation(ServerExceptionDefinedReason.ALREADY_RESERVATION);
-    }
+      final TrainTicket ticket = ticketService.find(ticketId)
+        .orElseThrow(() -> new TrainTicketNotFoundException(ServerExceptionDefinedReason.NOT_FOUND_RESOURCE));
 
-    final String lockName = String.format("%s%d", START_TICKET_ISSUE_JOB_LOCK_NAME_PREFIX, ticket.getId());
-    runner.run(lockName, () -> ticket.issue());
+      final Boolean existsReservation = reserveService.existsReservation(member.getId(), ticketId);
+      if (existsReservation) {
+        throw new AlreadyHasReservation(ServerExceptionDefinedReason.ALREADY_RESERVATION);
+      }
 
-    return reserveService.save(member.getId(), ticket.getId()).getReservationCode();
+      final int stock = runner.currentStock("stock");
+      if(stock <= 0){
+        throw new TrainTicketOutOfStockException(ServerExceptionDefinedReason.TRAIN_TICKET_OUT_OF_STOCK);
+      }
+
+      reservationCode.set(reserveService.save(member.getId(), ticket.getId()).getReservationCode());
+      runner.setStock("stock", stock - 1);
+    });
+
+    return reservationCode.get();
+  }
+
+  public void setStock(String stockKey, int amount) {
+    runner.setStock(stockKey, amount);
   }
 }

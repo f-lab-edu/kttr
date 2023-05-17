@@ -26,10 +26,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -99,8 +95,8 @@ public class ReserveTrainTicketTest {
     ReflectionTestUtils.setField(ticket, "id", 1L);
 
     // mocking
-    given(memberService.findById(any())).willReturn(Optional.ofNullable(member));
-    given(ticketService.findBy(any())).willReturn(Optional.ofNullable(ticket));
+    given(memberService.find(any())).willReturn(Optional.ofNullable(member));
+    given(ticketService.find(any())).willReturn(Optional.ofNullable(ticket));
     given(reserveService.save(anyLong(), anyLong())).willReturn(reservationDetails);
 
     // when
@@ -125,7 +121,7 @@ public class ReserveTrainTicketTest {
     final Member member = new Member("test@test.co.kr", "encryted-password", "test@test.co.kr", "010-0000-0000");
 
     // mocking
-    given(memberService.findById(any())).willReturn(Optional.ofNullable(member));
+    given(memberService.find(any())).willReturn(Optional.ofNullable(member));
 
     // when & then
     Assertions.assertThrows(TrainTicketNotFoundException.class,
