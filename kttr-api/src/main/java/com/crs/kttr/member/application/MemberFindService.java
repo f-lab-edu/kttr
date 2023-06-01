@@ -13,7 +13,7 @@ public class MemberFindService {
 
   private final MemberCRUDService service;
 
-  public Optional<Member> findById(Long id) {
-    return service.findById(id);
+  public Optional<Member> find(Long id) {
+    return service.find(id);
   }
 }

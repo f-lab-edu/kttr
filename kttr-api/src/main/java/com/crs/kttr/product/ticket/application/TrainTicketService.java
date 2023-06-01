@@ -14,7 +14,7 @@ public class TrainTicketService {
 
   private final TrainTicketRepository repo;
 
-  public Optional<TrainTicket> findBy(Long ticketId) {
+  public Optional<TrainTicket> find(Long ticketId) {
     return repo.findById(ticketId);
   }
 

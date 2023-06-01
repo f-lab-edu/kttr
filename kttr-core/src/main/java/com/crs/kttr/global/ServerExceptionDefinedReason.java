@@ -11,7 +11,9 @@ public enum ServerExceptionDefinedReason {
 
   DUPLICATED_SIGNINID(1100, "이미 사용중인 아이디 입니다.", "이미 사용중인 아이디 입니다.", HttpStatus.BAD_REQUEST),
 
-  ALREADY_RESERVATION(1200, "이미 예약된 내역이 있습니다.", "이미 예약된 내역이 있습니다.", HttpStatus.BAD_REQUEST)
+  ALREADY_RESERVATION(1200, "이미 예약된 내역이 있습니다.", "이미 예약된 내역이 있습니다.", HttpStatus.BAD_REQUEST),
+
+  TRAIN_TICKET_OUT_OF_STOCK(1500, "재고가 부족합니다.", "재고가 부족합니다.", HttpStatus.BAD_REQUEST)
 
   ;
 

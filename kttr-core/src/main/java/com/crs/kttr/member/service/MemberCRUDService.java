@@ -14,7 +14,7 @@ public class MemberCRUDService {
 
   private final MemberRepository repo;
 
-  public Optional<Member> findById(Long id) {
+  public Optional<Member> find(Long id) {
     return repo.findById(id);
   }
 
