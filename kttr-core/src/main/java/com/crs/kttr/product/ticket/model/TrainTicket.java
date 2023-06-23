@@ -1,7 +1,5 @@
 package com.crs.kttr.product.ticket.model;
 
-import com.crs.kttr.global.ServerExceptionDefinedReason;
-import com.crs.kttr.product.exception.TrainTicketOutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
 

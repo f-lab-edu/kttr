@@ -1,9 +1,18 @@
-database:
-  type: com.zaxxer.hikari.HikariDataSource
-  driverClassName: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://db-frvbp-kr.vpc-pub-cdb.ntruss.com:3306/kttr?useSSL=false
-  username: kttr_service
-  password: KttrService1!
-  hikari:
-    poolName: Hikari
-    auto-commit: false
+#database:
+#  type: com.zaxxer.hikari.HikariDataSource
+#  driverClassName: com.mysql.cj.jdbc.Driver
+#  url: jdbc:mysql://db-frvbp-kr.vpc-pub-cdb.ntruss.com:3306/kttr?useSSL=false
+#  username: kttr_service
+#  password: KttrService1!
+#  hikari:
+#    poolName: Hikari
+#    auto-commit: false
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+    database-platform: org.hibernate.dialect.H2Dialect
+    db_close_delay: -1

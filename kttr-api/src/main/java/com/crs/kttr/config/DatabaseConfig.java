@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import javax.sql.DataSource;
 
-@Configuration
+//@Configuration
 @EntityScan(basePackages = "com.crs.kttr")
 @EnableJpaRepositories(basePackages = "com.crs.kttr")
 public class DatabaseConfig {
@@ -19,14 +19,14 @@ public class DatabaseConfig {
     this.databaseProperties = databaseProperties;
   }
 
-  @Primary
-  @Bean(name = "jpaDataSource")
-  public DataSource dataSource() {
-    return DataSourceBuilder.create()
-      .url(databaseProperties.getUrl())
-      .username(databaseProperties.getUsername())
-      .password(databaseProperties.getPassword())
-      .driverClassName(databaseProperties.getDriverClassName())
-      .build();
-  }
+//  @Primary
+//  @Bean(name = "jpaDataSource")
+//  public DataSource dataSource() {
+//    return DataSourceBuilder.create()
+//      .url(databaseProperties.getUrl())
+//      .username(databaseProperties.getUsername())
+//      .password(databaseProperties.getPassword())
+//      .driverClassName(databaseProperties.getDriverClassName())
+//      .build();
+//  }
 }

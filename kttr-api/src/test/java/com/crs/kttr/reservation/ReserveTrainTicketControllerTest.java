@@ -1,6 +1,7 @@
 package com.crs.kttr.reservation;
 
-import com.crs.kttr.reservation.application.TicketReservationService;
+import com.crs.kttr.reservation.application.TicketReserve;
+import com.crs.kttr.reservation.application.TicketReserveFacadeService;
 import com.crs.kttr.reservation.controller.ReserveTrainTicketController;
 import com.crs.kttr.reservation.controller.dto.TrainTicketReserveRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +30,7 @@ public class ReserveTrainTicketControllerTest {
   private ObjectMapper objectMapper;
 
   @MockBean
-  private TicketReservationService service;
+  private TicketReserveFacadeService service;
 
   private MockMvc mvc;
 

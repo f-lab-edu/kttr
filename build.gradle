@@ -36,6 +36,7 @@ subprojects {
 		implementation 'org.springframework.boot:spring-boot-starter-security'
 		implementation 'org.springframework.boot:spring-boot-starter-validation'
 		implementation 'org.redisson:redisson-spring-boot-starter:3.20.1'
+		implementation 'org.springframework.boot:spring-boot-starter-aop'
 
 		implementation 'mysql:mysql-connector-java:8.0.26'
 

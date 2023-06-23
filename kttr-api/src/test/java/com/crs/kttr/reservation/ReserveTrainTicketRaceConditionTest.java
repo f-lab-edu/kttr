@@ -1,10 +1,8 @@
 package com.crs.kttr.reservation;
 
-import com.crs.kttr.member.exception.MemberNotFoundException;
-import com.crs.kttr.member.model.Member;
-import com.crs.kttr.product.ticket.exception.TrainTicketNotFoundException;
-import com.crs.kttr.product.ticket.model.Stock;
-import com.crs.kttr.reservation.application.TicketReservationService;
+import com.crs.kttr.product.ticket.model.TrainTicket;
+import com.crs.kttr.product.ticket.persistence.TrainTicketRepository;
+import com.crs.kttr.reservation.application.TicketReserveFacadeService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -31,14 +27,11 @@ public class ReserveTrainTicketRaceConditionTest {
   private static final Integer USER_COUNT = 10000;
 
   @Autowired
-  private TicketReservationService service;
+  private TicketReserveFacadeService service;
 
-  @BeforeEach
-  void setUp() {
-    final Stock ticket = new Stock("ticket", 1L, 20);
+  @Autowired
+  private TrainTicketRepository ticketRepository;
 
-    service.setStock("stock", ticket.getAmount());
-  }
 
   @Test
   @DisplayName("락 사용하여 기차 예약 성공")
@@ -62,6 +55,11 @@ public class ReserveTrainTicketRaceConditionTest {
     cyclicBarrier.await();
 
     es.shutdown();
+
+    List<TrainTicket> tickets = ticketRepository.findAll();
+    if (!tickets.isEmpty()) {
+      Assertions.assertEquals(20, tickets.get(0).getIssueQuantity());
+    }
   }
 
   @Test

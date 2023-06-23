@@ -1,7 +1,8 @@
 package com.crs.kttr.reservation.controller;
 
 import com.crs.kttr.global.dto.Response;
-import com.crs.kttr.reservation.application.TicketReservationService;
+import com.crs.kttr.reservation.application.TicketReserve;
+import com.crs.kttr.reservation.application.TicketReserveFacadeService;
 import com.crs.kttr.reservation.controller.dto.TrainTicketReserveRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ReserveTrainTicketController {
 
-  final TicketReservationService service;
+  final TicketReserveFacadeService service;
 
   @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public Response<String> reserve(final @Valid @RequestBody TrainTicketReserveRequest req) {

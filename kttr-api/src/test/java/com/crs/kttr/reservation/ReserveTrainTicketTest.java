@@ -1,7 +1,6 @@
 package com.crs.kttr.reservation;
 
-import com.crs.kttr.product.ticket.model.Stock;
-import com.crs.kttr.reservation.application.TicketReservationService;
+import com.crs.kttr.reservation.application.TicketReserve;
 import com.crs.kttr.reservation.controller.dto.TrainTicketReserveRequest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -21,7 +20,7 @@ import java.util.Set;
 public class ReserveTrainTicketTest {
 
   @InjectMocks
-  private TicketReservationService service;
+  private TicketReserve service;
 
   ValidatorFactory factory;
   Validator validator;

@@ -1,7 +1,5 @@
-# train_ticket
 INSERT INTO train_ticket (name, max_quantity, issue_quantity) VALUES ('티켓', 20, 0);
 
-# member
 INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test1@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
 INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test2@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
 INSERT INTO member (sign_in_id, sign_in_password, membership_code, email, phone_number, member_status) VALUES ('test3@email.com', '1234', '', 'test@email.com', '010-1234-1234', 'ACTIVE');
