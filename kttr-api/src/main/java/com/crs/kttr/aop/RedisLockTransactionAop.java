@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisLockTransactionAop {
   private final RedissonClient client;
 
-//  @Around("execution(* com.crs.kttr..*.*(..))")
+  @Around("execution(* com.crs.kttr..*.*(..))")
   private void around(ProceedingJoinPoint joinPoint) throws Throwable {
     String key = "stock";
     RLock lock = client.getLock(key);
@@ -33,12 +33,13 @@ public class RedisLockTransactionAop {
         return;
       }
 
-      // method 실행
+      System.out.println("lock 획득");
       Object result = joinPoint.proceed();
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     } finally {
       lock.unlock();
+      System.out.println("lock 해제");
     }
   }
 }

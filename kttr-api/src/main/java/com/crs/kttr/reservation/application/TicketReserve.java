@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class TicketReserve {
@@ -16,12 +18,15 @@ public class TicketReserve {
 
   private final TrainTicketRepository repo;
 
+  @Transactional
   public String reserve(Long memberId, TrainTicket ticket) {
-    ticket.issue();
+    final TrainTicket findTrainTicket = repo.findById(ticket.getId()).get();
 
-    ReservationDetails details = reserveService.save(memberId, ticket.getId());
+    findTrainTicket.issue();
 
-    repo.save(ticket);
+    ReservationDetails details = reserveService.save(memberId, findTrainTicket.getId());
+
+    repo.save(findTrainTicket);
     return details.getReservationCode();
   }
 }

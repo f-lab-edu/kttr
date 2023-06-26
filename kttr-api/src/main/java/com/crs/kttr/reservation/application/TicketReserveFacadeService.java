@@ -13,7 +13,6 @@ public class TicketReserveFacadeService {
   final TicketReserve reservationService;
 
   @RedisLockTransaction
-  @Transactional
   public String reserve(Long memberId, Long ticketId) {
     ReservationCommand command = validService.isValid(memberId, ticketId);
 
